@@ -9,14 +9,14 @@ lastDigit n = n `mod` 10
 
 -- Drop the last digit from a number
 dropLastDigit :: Integer -> Integer
-dropLastDigit n = n - lastDigit n
+dropLastDigit n = n `div` 10
 
 -- Exercise 2 -----------------------------------------
 
 toRevDigits :: Integer -> [Integer]
 toRevDigits n
   | n > 0 = (lastDigit n) : toRevDigits (dropLastDigit n)
-  | otherwise []
+  | otherwise = []
 
 -- Exercise 3 -----------------------------------------
 
@@ -38,7 +38,7 @@ sumDigits lst = sum (map sum (map toRevDigits lst))
 
 -- Validate a credit card number using the above functions.
 luhn :: Integer -> Bool
-luhn = undefined
+luhn n = lastDigit (sumDigits (doubleEveryOther (toRevDigits n))) == 0
 
 -- Exercise 6 -----------------------------------------
 
@@ -47,4 +47,5 @@ type Peg = String
 type Move = (Peg, Peg)
 
 hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
-hanoi = undefined
+hanoi 0 _ _ _ = []
+hanoi n a b c = hanoi (n-1) a c b ++ [(a, c)] ++ hanoi (n-1) b a c
