@@ -41,12 +41,13 @@ matches c1 c2 = sum $ map minimum $ transpose [countColors c1, countColors c2]
 
 -- Construct a Move from a guess given the actual code
 getMove :: Code -> Code -> Move
-getMove = undefined
+getMove actual guess = Move guess m ((matches actual guess) - m)
+                       where m = exactMatches actual guess
 
 -- Exercise 4 -----------------------------------------
 
 isConsistent :: Move -> Code -> Bool
-isConsistent = undefined
+isConsistent (Move guess ematch nematch) code = getMove code guess == Move guess ematch nematch
 
 -- Exercise 5 -----------------------------------------
 
