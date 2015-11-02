@@ -52,17 +52,30 @@ isConsistent (Move guess ematch nematch) code = getMove code guess == Move guess
 -- Exercise 5 -----------------------------------------
 
 filterCodes :: Move -> [Code] -> [Code]
-filterCodes = undefined
+filterCodes move codes = filter (isConsistent move) codes
 
 -- Exercise 6 -----------------------------------------
 
+allCodesHelper :: [Code] -> Peg -> [Code]
+allCodesHelper codes p = map (p:) codes
+
 allCodes :: Int -> [Code]
-allCodes = undefined
+allCodes 0 = [[]]
+allCodes n = concatMap (allCodesHelper (allCodes (n-1))) colors
 
 -- Exercise 7 -----------------------------------------
 
+solveHelper :: Code -> [Code] -> [Move]
+solveHelper _ [] = []
+solveHelper secret codes
+  | secret == guess = [move]
+  | otherwise = move : solveHelper secret (tail codes)
+  where
+    guess = head codes
+    move = getMove secret guess
+
 solve :: Code -> [Move]
-solve = undefined
+solve secret = solveHelper secret (allCodes $ length secret)
 
 -- Bonus ----------------------------------------------
 
