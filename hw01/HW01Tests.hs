@@ -30,6 +30,9 @@ testLuhn (n, expect) = luhn n == expect
 testHanoi :: (Integer, Peg, Peg, Peg, [Move]) -> Bool
 testHanoi (n, a, b, c, moves) = hanoi n a b c == moves
 
+testHanoi4 :: (Integer, Peg, Peg, Peg, Peg, Int) -> Bool
+testHanoi4 (n, a, b, c, d, len) = (length $ hanoi4 n a b c d) == len
+
 ex1Tests :: [Test]
 ex1Tests = [ Test "lastDigit test" testLastDigit
              [(123, 3), (1234, 4), (5, 5), (10, 0), (0, 0)]
@@ -75,6 +78,11 @@ ex6Tests = [ Test "hanoi test" testHanoi
              [(2, "a", "b", "c", [("a","b"), ("a","c"), ("b","c")])]
            ]
 
+ex7Tests :: [Test]
+ex7Tests = [ Test "hanoi4 test" testHanoi4
+             [(4, "a", "b", "c", "d", 9)]
+           ]
+
 -- All Tests ------------------------------------------
 
 allTests :: [Test]
@@ -84,4 +92,5 @@ allTests = concat [ ex1Tests
                   , ex4Tests
                   , ex5Tests
                   , ex6Tests
+                  , ex7Tests
                   ]
